@@ -12,6 +12,12 @@ export class Todo {
 
   @prop({ required: true })
   public userId!: string;
+
+  @prop({ default: Date.now() })
+  public createdAt!: Date;
+
+  @prop({ default: Date.now() })
+  public updatedAt!: Date;
 }
 
 export const TodoModel = getModelForClass(Todo, {

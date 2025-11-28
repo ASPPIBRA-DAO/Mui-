@@ -5,19 +5,9 @@ const userCore = {
   name: z.string(),
 };
 
-const createUser = z.object({
-  ...userCore,
-  password: z.string().min(6),
-});
-
 const createUserResponse = z.object({
   id: z.string(),
   ...userCore,
-});
-
-const login = z.object({
-  email: z.string().email(),
-  password: z.string(),
 });
 
 const loginResponse = z.object({
@@ -25,8 +15,6 @@ const loginResponse = z.object({
 });
 
 export const userSchemas = {
-  createUser,
   createUserResponse,
-  login,
   loginResponse,
 };

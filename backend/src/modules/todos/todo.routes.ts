@@ -1,9 +1,12 @@
 import { FastifyInstance } from 'fastify';
 import { todoSchemas } from './todo.schema';
 import { TodoController } from './todo.controller';
+import { authenticate } from '../../middlewares/guard';
 
 export async function todoRoutes(server: FastifyInstance) {
   const todoController = new TodoController();
+
+  server.addHook('onRequest', authenticate);
 
   server.post(
     '/',
@@ -14,7 +17,6 @@ export async function todoRoutes(server: FastifyInstance) {
           201: todoSchemas.createTodoResponse,
         },
       },
-      preHandler: [server.authenticate],
     },
     todoController.createTodo
   );
@@ -27,7 +29,6 @@ export async function todoRoutes(server: FastifyInstance) {
           200: todoSchemas.getTodosResponse,
         },
       },
-      preHandler: [server.authenticate],
     },
     todoController.getTodos
   );

@@ -3,8 +3,6 @@ import { userRoutes } from './modules/users/user.routes';
 import { todoRoutes } from './modules/todos/todo.routes';
 import { verify } from './utils/jwt';
 
-declarations.d.ts
-
 const server = fastify();
 
 server.decorate(

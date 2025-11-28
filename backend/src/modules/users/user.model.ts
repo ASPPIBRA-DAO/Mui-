@@ -1,6 +1,11 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
+import { getModelForClass, prop, pre } from '@typegoose/typegoose';
 import { hash as argonHash, verify } from 'argon2';
 
+@pre<User>('save', async function () {
+  if (this.isModified('password')) {
+    this.password = await argonHash(this.password);
+  }
+})
 export class User {
   @prop({ required: true, unique: true })
   public email!: string;
@@ -21,7 +26,3 @@ export const UserModel = getModelForClass(User, {
     timestamps: true,
   },
 });
-
-export const hash = async (password: string): Promise<string> => {
-  return argonHash(password);
-};

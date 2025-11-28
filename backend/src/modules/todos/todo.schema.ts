@@ -19,6 +19,8 @@ const createTodoResponse = z.object({
 
 const getTodosResponse = z.array(createTodoResponse);
 
+export type CreateTodoInput = z.infer<typeof createTodo>;
+
 export const todoSchemas = {
   createTodo,
   createTodoResponse,
