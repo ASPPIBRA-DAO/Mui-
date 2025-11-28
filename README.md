@@ -60,21 +60,28 @@ O frontend foi desenvolvido para ser uma interface reativa e moderna para intera
 
 | Tecnologia | Versão | Descrição |
 | :--- | :--- | :--- |
-| **React** | ^18.3.1 | Biblioteca JavaScript para a construção de interfaces de usuário. |
+| **React** | ^19.2.0 | Biblioteca JavaScript para a construção de interfaces de usuário. |
 | **Vite** | - | Ferramenta de build moderna e rápida para desenvolvimento frontend. |
 | **TypeScript**| - | Utilizado para adicionar tipagem ao código React. |
-| **React Router DOM** | ^6.23.1 | Biblioteca para gerenciamento de rotas na aplicação React. |
+| **React Router DOM** | ^7.9.6 | Biblioteca para gerenciamento de rotas na aplicação React. |
+| **Material UI** | ^7.3.5 | Biblioteca de componentes de interface de usuário para React. |
+| **Emotion** | ^11.14.0 | Biblioteca para estilização de componentes React. |
 
 #### **Dependências Instaladas:**
 
 *   **Produção (`dependencies`):**
-    *   `react`: `^18.3.1`
-    *   `react-dom`: `^18.3.1`
-    *   `react-router-dom`: `^6.23.1`
+    *   `react`: `^19.2.0`
+    *   `react-dom`: `^19.2.0`
+    *   `react-router-dom`: `^7.9.6`
+    *   `@mui/material`: `^7.3.5`
+    *   `@mui/icons-material`: `^7.3.5`
+    *   `@emotion/react`: `^11.14.0`
+    *   `@emotion/styled`: `^11.14.1`
+
 *   **Desenvolvimento (`devDependencies`):**
-    *   `@types/react`: `^18.3.3`
-    *   `@types/react-dom`: `^18.3.0`
-    *   `@vitejs/plugin-react`: `^4.3.0`
+    *   `@types/react`: `^19.2.7`
+    *   `@types/react-dom`: `^19.2.3`
+    *   `@vitejs/plugin-react`: `^5.1.1`
 
 #### **Estrutura de Arquivos Criada:**
 
