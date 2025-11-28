@@ -15,13 +15,15 @@ O backend foi desenvolvido para operar em um ambiente serverless, utilizando a p
 
 #### **Tecnologias e Ferramentas:**
 
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **Hono** | Um framework web para JavaScript/TypeScript, pequeno, simples e ultrarrápido, ideal para ambientes de edge computing como Cloudflare Workers. |
-| **Cloudflare Workers**| Plataforma de computação serverless que executa o código na borda da rede da Cloudflare, mais perto do usuário final. |
-| **TypeScript** | Garante a tipagem e a robustez do código. |
-| **Vitest** | Framework de testes unitários e de integração, configurado para validar a lógica da API. |
-| **Wrangler** | A CLI para construir e gerenciar aplicações na plataforma Cloudflare. |
+| Tecnologia | Versão | Descrição |
+| :--- | :--- | :--- |
+| **Hono** | ^5.0.22 | Framework web ultrarrápido, ideal para ambientes de edge computing. |
+| **Cloudflare Workers**| - | Plataforma serverless para execução de código na borda. |
+| **TypeScript** | ^5.5.2 | Garante a tipagem e a robustez do código. |
+| **Vitest** | ~3.2.0 | Framework de testes unitários e de integração. |
+| **Wrangler** | ^4.51.0 | CLI para construir e gerenciar aplicações Cloudflare. |
+| **bcryptjs** | ^3.0.3 | Biblioteca para hashing de senhas. |
+| **jsonwebtoken** | ^9.0.2 | Para criação e verificação de JSON Web Tokens (JWT). |
 
 #### **Estrutura de Arquivos do Backend:**
 
@@ -52,13 +54,14 @@ O frontend foi construído como uma interface reativa e moderna para consumir a 
 
 #### **Tecnologias e Ferramentas:**
 
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **React** | Biblioteca para construção de interfaces de usuário reativas. |
-| **Vite** | Ferramenta de build otimizada que oferece um desenvolvimento rápido. |
-| **React Router DOM** | Para gerenciamento de rotas e navegação na SPA. |
-| **Material UI** | Biblioteca de componentes de UI para um design consistente e moderno. |
-| **TypeScript** | Adiciona segurança de tipo ao código do frontend. |
+| Tecnologia | Versão | Descrição |
+| :--- | :--- | :--- |
+| **React** | ^19.2.0 | Biblioteca para construção de interfaces de usuário reativas. |
+| **Vite** | ^7.2.4 | Ferramenta de build otimizada para desenvolvimento rápido. |
+| **React Router DOM** | ^7.9.6 | Para gerenciamento de rotas e navegação na SPA. |
+| **Material UI** | ^7.3.5 | Biblioteca de componentes de UI para design moderno. |
+| **Axios** | ^1.13.2 | Cliente HTTP para realizar requisições à API. |
+| **TypeScript** | ~5.9.3 | Adiciona segurança de tipo ao código do frontend. |
 
 #### **Estrutura de Arquivos do Frontend:**
 
