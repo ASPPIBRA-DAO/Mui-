@@ -3,7 +3,7 @@
 
 Foi desenvolvida uma aplicação full-stack de lista de tarefas (Todo App). A aplicação é composta por:
 
-*   **Backend:** Uma API RESTful construída com **Node.js** e o framework **Fastify**. Ela é responsável pelo registro de usuários, autenticação via JWT (JSON Web Tokens) e pelo gerenciamento das tarefas (criar e listar). Os dados são persistidos em um banco de dados **SQLite** através do ORM **Prisma**.
+*   **Backend:** Uma API RESTful construída com **Node.js** e o framework **Fastify**. Ela é responsável pelo registro de usuários, autenticação via JWT (JSON Web Tokens) e pelo gerenciamento das tarefas (criar e listar).
 *   **Frontend:** Uma SPA (Single-Page Application) construída com **React** e **Vite**. A interface permite que os usuários se registrem, façam login e, uma vez autenticados, visualizem e criem novas tarefas, que são consumidas a partir da API do backend.
 
 ---
@@ -19,36 +19,58 @@ O backend foi estruturado de forma modular para separar as responsabilidades e f
 | **Node.js** | ~20.x | Ambiente de execução para o JavaScript no servidor. |
 | **Fastify** | ^4.27.0 | Framework web para Node.js, conhecido por sua alta performance e baixo overhead. |
 | **TypeScript**| ^5.4.5 | Superset do JavaScript que adiciona tipagem estática ao código. |
-| **Prisma** | ^5.14.0 | ORM (Object-Relational Mapping) para Node.js e TypeScript, utilizado para interagir com o banco de dados. |
-| **SQLite** | - | Motor de banco de dados SQL embutido, utilizado para armazenar os dados da aplicação. |
-| **bcryptjs** | ^2.4.3 | Biblioteca para fazer o hash de senhas antes de armazená-las. |
-| **jsonwebtoken** | ^9.0.2 | Biblioteca para criar e verificar JSON Web Tokens (JWT) para autenticação. |
 | **tsx** | ^4.11.0 | Ferramenta para executar arquivos TypeScript diretamente, sem a necessidade de compilação prévia. |
-
-#### **Dependências Instaladas:**
-
-*   **Produção (`dependencies`):**
-    *   `@fastify/jwt`: `^8.0.1`
-    *   `@prisma/client`: `^5.14.0`
-    *   `bcryptjs`: `^2.4.3`
-    *   `fastify`: `^4.27.0`
-    *   `jsonwebtoken`: `^9.0.2`
-*   **Desenvolvimento (`devDependencies`):**
-    *   `@types/bcryptjs`: `^2.4.3`
-    *   `@types/jsonwebtoken`: `^9.0.5`
-    *   `@types/node`: `^20.12.12`
-    *   `prisma`: `^5.14.0`
-    *   `tsx`: `^4.11.0`
-    *   `typescript`: `^5.4.5`
 
 #### **Estrutura de Arquivos Criada:**
 
-*   `backend/prisma/schema.prisma`: Arquivo de definição do esquema do banco de dados para o Prisma.
 *   `backend/src/server.ts`: Ponto de entrada da aplicação, onde o servidor Fastify é configurado e iniciado.
 *   `backend/src/modules/users/`: Módulo contendo toda a lógica relacionada a usuários (rotas, controllers, repositórios).
 *   `backend/src/modules/todos/`: Módulo contendo a lógica de negócio para as tarefas.
 *   `backend/src/auth/`: Contém o hook de autenticação para verificar o token JWT.
 *   `backend/src/declarations.d.ts`: Arquivo de definição de tipos para estender a interface do Fastify.
+```
+backend/
+├── package.json
+├── src
+│   ├── config
+│   │   └── index.ts
+│   ├── db
+│   ├── declarations.d.ts
+│   ├── index.ts
+│   ├── middlewares
+│   │   ├── cors.ts
+│   │   └── guard.ts
+│   ├── modules
+│   │   ├── auth
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.routes.ts
+│   │   │   └── auth.service.ts
+│   │   ├── todos
+│   │   │   ├── todo.controller.ts
+│   │   │   ├── todo.model.ts
+│   │   │   ├── todo.routes.ts
+│   │   │   ├── todo.schema.ts
+│   │   │   └── todo.service.ts
+│   │   └── users
+│   │       ├── user.controller.ts
+│   │       ├── user.model.ts
+│   │       ├── user.routes.ts
+│   │       ├── user.schema.ts
+│   │       └── user.service.ts
+│   ├── server.ts
+│   └── utils
+│       ├── crypto.ts
+│       ├── jwt.ts
+│       └── response.ts
+├── test
+│   ├── env.d.ts
+│   ├── index.spec.ts
+│   └── tsconfig.json
+├── tsconfig.json
+├── vitest.config.mts
+├── worker-configuration.d.ts
+└── wrangler.jsonc
+```
 
 ---
 
@@ -67,22 +89,6 @@ O frontend foi desenvolvido para ser uma interface reativa e moderna para intera
 | **Material UI** | ^7.3.5 | Biblioteca de componentes de interface de usuário para React. |
 | **Emotion** | ^11.14.0 | Biblioteca para estilização de componentes React. |
 
-#### **Dependências Instaladas:**
-
-*   **Produção (`dependencies`):**
-    *   `react`: `^19.2.0`
-    *   `react-dom`: `^19.2.0`
-    *   `react-router-dom`: `^7.9.6`
-    *   `@mui/material`: `^7.3.5`
-    *   `@mui/icons-material`: `^7.3.5`
-    *   `@emotion/react`: `^11.14.0`
-    *   `@emotion/styled`: `^11.14.1`
-
-*   **Desenvolvimento (`devDependencies`):**
-    *   `@types/react`: `^19.2.7`
-    *   `@types/react-dom`: `^19.2.3`
-    *   `@vitejs/plugin-react`: `^5.1.1`
-
 #### **Estrutura de Arquivos Criada:**
 
 *   `frontend/index.html`: Ponto de entrada da aplicação web.
@@ -97,39 +103,41 @@ O frontend foi desenvolvido para ser uma interface reativa e moderna para intera
 ### **Estrutura de Diretórios**
 
 ```
-.
-├── backend
-│   ├── prisma
-│   │   └── schema.prisma
-│   ├── src
-│   │   ├── auth
-│   │   │   └── auth.ts
-│   │   ├── modules
-│   │   │   ├── users
-│   │   │   │   ├── user.controller.ts
-│   │   │   │   ├── user.repository.ts
-│   │   │   │   ├── user.routes.ts
-│   │   │   │   └── user.schemas.ts
-│   │   │   └── todos
-│   │   │       ├── todo.controller.ts
-│   │   │       ├── todo.repository.ts
-│   │   │       ├── todo.routes.ts
-│   │   │       └── todo.schemas.ts
-│   │   └── server.ts
-│   └── package.json
-└── frontend
-    ├── src
-    │   ├── components
-    │   │   ├── LoginForm.tsx
-    │   │   ├── RegisterForm.tsx
-    │   │   └── Todos.tsx
-    │   ├── pages
-    │   │   ├── Login.tsx
-    │   │   ├── Register.tsx
-    │   │   └── Todos.tsx
-    │   ├── App.tsx
-    │   └── main.tsx
-    └── package.json
+frontend/
+├── eslint.config.js
+├── index.html
+├── package.json
+├── public
+│   └── vite.svg
+├── README.md
+├── src
+│   ├── App.css
+│   ├── App.tsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── AuthProvider.tsx
+│   │   ├── CreateTodo.tsx
+│   │   ├── Header.tsx
+│   │   ├── LoginForm.tsx
+│   │   ├── ProtectedRoute.tsx
+│   │   ├── RegisterForm.tsx
+│   │   ├── TodoList.tsx
+│   │   └── Todos.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── Dashboard.tsx
+│   │   ├── Home.tsx
+│   │   ├── Login.tsx
+│   │   ├── Register.tsx
+│   │   └── Todos.tsx
+│   └── vite-env.d.ts
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
 ```
 
 ---
