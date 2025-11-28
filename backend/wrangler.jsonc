@@ -6,6 +6,15 @@
   "observability": {
     "enabled": true
   },
+  "vars": {
+    "ACCOUNT_ID": "5d91807e648c183cb7833caa06dbcbdb"
+  },
+  "r2_buckets": [
+    {
+      "binding": "R2",
+      "bucket_name": "governance-system-assets"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
