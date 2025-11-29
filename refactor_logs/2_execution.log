@@ -1,0 +1,10 @@
+SUCCESS|frontend/src/components/Header.tsx|frontend/src/components/layout/Header.tsx
+SUCCESS|frontend/src/components/Footer.tsx|frontend/src/components/layout/Footer.tsx
+SUCCESS|frontend/src/components/LayoutPublic.tsx|frontend/src/components/layout/LayoutPublic.tsx
+SUCCESS|frontend/src/components/LoginForm.tsx|frontend/src/components/auth/LoginForm.tsx
+SUCCESS|frontend/src/components/RegisterForm.tsx|frontend/src/components/auth/RegisterForm.tsx
+SUCCESS|frontend/src/components/AuthProvider.tsx|frontend/src/context/AuthProvider.tsx
+SUCCESS|frontend/src/components/CreateTodo.tsx|frontend/src/components/todo/CreateTodo.tsx
+SUCCESS|frontend/src/components/TodoList.tsx|frontend/src/components/todo/TodoList.tsx
+SUCCESS|frontend/src/components/Todos.tsx|frontend/src/components/todo/TodoManager.tsx
+SUCCESS|frontend/src/components/ProtectedRoute.tsx|frontend/src/routes/ProtectedRoute.tsx

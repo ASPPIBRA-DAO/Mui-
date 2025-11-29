@@ -1,6 +1,6 @@
 import { Container, Box, Typography, Link as MuiLink } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/auth/LoginForm';
 
 const Login = () => {
   return (

@@ -6,7 +6,7 @@ import App from './App';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
 // 1. Importação do AuthProvider (O "Cérebro" do login)
-import { AuthProvider } from './components/AuthProvider';
+import { AuthProvider } from './context/AuthProvider';
 
 // Configuração do Tema
 const theme = createTheme({

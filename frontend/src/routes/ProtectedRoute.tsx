@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import { Box, CircularProgress } from "@mui/material";
 // 1. Importamos o tipo ReactNode explicitamente
 import { type ReactNode } from "react";

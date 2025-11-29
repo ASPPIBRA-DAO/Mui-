@@ -1,61 +1,47 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api'; // Usamos a nossa configuração centralizada
+import { useAuth } from '../../context/AuthProvider';
+import api from '../../services/api';
 
-// Importações do Material UI v7
-import { Box, Button, TextField, Alert } from '@mui/material';
+// Componentes visuais do Material UI
+import { Box, Button, TextField, Alert } from '@mui/material'; // Removi Typography e Paper que não estavam sendo usados para limpar os avisos
 
-export function RegisterForm() {
-  // Estados para os campos
-  const [name, setName] = useState(''); // Adicionei Nome pois seu AuthProvider espera um 'name'
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  // Estado para erros
   const [error, setError] = useState('');
   
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(''); // Limpa erros anteriores
+    setError('');
 
     try {
       // 1. Envia os dados para o Backend
-      // ⚠️ ATENÇÃO: Verifique se sua rota é '/register' ou '/users' no backend
-      await api.post('/register', { 
-        name, 
-        email, 
-        password 
-      });
+      const response = await api.post('/login', { email, password });
 
-      // 2. Se der certo, redireciona para o login para a pessoa entrar
-      navigate('/login');
+      // 2. Pega o token e o user da resposta
+      const { token, user } = response.data;
+
+      // 3. Salva no contexto global
+      login(token, user);
+
+      // 4. Redireciona para o Dashboard
+      navigate('/dashboard');
       
-    } catch (err) {
+    } catch (err) { // <--- O ERRO ESTAVA PROVAVELMENTE AQUI (Faltava a chave de abertura '{')
       console.error(err);
-      setError('Falha ao criar conta. Verifique os dados e tente novamente.');
+      setError('Falha no login. Verifique seu email e senha.');
     }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {/* Exibe erro se houver */}
+      {/* Mostra o erro se houver */}
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="name"
-        label="Nome Completo"
-        name="name"
-        autoComplete="name"
-        autoFocus
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
+      
       <TextField
         margin="normal"
         required
@@ -64,6 +50,7 @@ export function RegisterForm() {
         label="Endereço de Email"
         name="email"
         autoComplete="email"
+        autoFocus
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -76,7 +63,7 @@ export function RegisterForm() {
         label="Senha"
         type="password"
         id="password"
-        autoComplete="new-password"
+        autoComplete="current-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -87,8 +74,10 @@ export function RegisterForm() {
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
       >
-        Cadastrar
+        Entrar
       </Button>
     </Box>
   );
-}
+};
+
+export default LoginForm;

@@ -2,7 +2,7 @@ import { Container, Box, Typography, Link as MuiLink } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 // CORREÇÃO: Adicionamos as chaves { } aqui
-import { RegisterForm } from '../components/RegisterForm';
+import { RegisterForm } from '../components/auth/RegisterForm';
 
 const Register = () => {
   return (

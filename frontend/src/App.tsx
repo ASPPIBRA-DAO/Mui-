@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Importação dos seus componentes
-import LayoutPublic from "./components/LayoutPublic";
-import ProtectedRoute from "./components/ProtectedRoute";
+import LayoutPublic from "./components/layout/LayoutPublic";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 // Importação das páginas
 import Home from "./pages/Home";
