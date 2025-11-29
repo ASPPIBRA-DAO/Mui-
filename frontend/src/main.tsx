@@ -5,18 +5,21 @@ import App from './App';
 // Importações do Material UI v7
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
-// 1. Configuração do Tema (Cores, fontes, etc)
+// 1. Importação do AuthProvider (O "Cérebro" do login)
+import { AuthProvider } from './components/AuthProvider';
+
+// Configuração do Tema
 const theme = createTheme({
   palette: {
-    mode: 'light', // ou 'dark'
+    mode: 'light', 
     primary: {
-      main: '#1976d2', // Azul padrão MUI
+      main: '#1976d2',
     },
     secondary: {
-      main: '#dc004e', // Rosa padrão
+      main: '#dc004e',
     },
     background: {
-      default: '#f4f6f8', // Cor de fundo suave para a aplicação inteira
+      default: '#f4f6f8',
     },
   },
   typography: {
@@ -26,11 +29,15 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* 2. Provider do Tema envolve toda a aplicação */}
+    {/* O ThemeProvider fornece as cores */}
     <ThemeProvider theme={theme}>
-      {/* 3. CssBaseline reseta o CSS do navegador (margens, box-sizing) */}
       <CssBaseline />
-      <App />
+      
+      {/* 2. O AuthProvider fornece a lógica de segurança para o App inteiro */}
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+      
     </ThemeProvider>
   </React.StrictMode>
 );

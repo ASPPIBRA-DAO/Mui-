@@ -1,17 +1,29 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
+import { Box, CircularProgress } from "@mui/material";
 
 interface ProtectedRouteProps {
-  children: React.ReactElement;
+  children: JSX.Element;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const isAuthenticated = false; // Replace with actual auth check
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { isAuthenticated, loading } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+  if (loading) {
+    // Mostra um loading enquanto verifica se o usuário está logado
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
+  if (!isAuthenticated) {
+    // Se não estiver logado, manda pro login
+    return <Navigate to="/login" replace />;
+  }
+
+  // Se estiver logado, mostra a página (Dashboard ou Todos)
   return children;
 };
 
