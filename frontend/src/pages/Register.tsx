@@ -1,10 +1,33 @@
-import React from 'react';
+import { Container, Box, Typography, Link as MuiLink } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
-const Register: React.FC = () => {
+// CORREÇÃO: Adicionamos as chaves { } aqui
+import { RegisterForm } from '../components/RegisterForm';
+
+const Register = () => {
   return (
-    <div>
-      <h1>Register Page</h1>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Cadastro
+        </Typography>
+        
+        <RegisterForm />
+
+        <Box sx={{ mt: 2 }}>
+          <MuiLink component={RouterLink} to="/login" variant="body2">
+            {"Já tem uma conta? Faça login"}
+          </MuiLink>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

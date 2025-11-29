@@ -1,50 +1,94 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api'; // Usamos a nossa configuração centralizada
+
+// Importações do Material UI v7
+import { Box, Button, TextField, Alert } from '@mui/material';
 
 export function RegisterForm() {
+  // Estados para os campos
+  const [name, setName] = useState(''); // Adicionei Nome pois seu AuthProvider espera um 'name'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  // Estado para erros
+  const [error, setError] = useState('');
+  
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(''); // Limpa erros anteriores
 
-    const res = await fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      // 1. Envia os dados para o Backend
+      // ⚠️ ATENÇÃO: Verifique se sua rota é '/register' ou '/users' no backend
+      await api.post('/register', { 
+        name, 
+        email, 
+        password 
+      });
 
-    if (res.ok) {
-      navigate('/');
-    } else {
-      alert('Something went wrong');
+      // 2. Se der certo, redireciona para o login para a pessoa entrar
+      navigate('/login');
+      
+    } catch (err) {
+      console.error(err);
+      setError('Falha ao criar conta. Verifique os dados e tente novamente.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+      {/* Exibe erro se houver */}
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="name"
+        label="Nome Completo"
+        name="name"
+        autoComplete="name"
+        autoFocus
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Endereço de Email"
+        name="email"
+        autoComplete="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Senha"
+        type="password"
+        id="password"
+        autoComplete="new-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+      >
+        Cadastrar
+      </Button>
+    </Box>
   );
 }

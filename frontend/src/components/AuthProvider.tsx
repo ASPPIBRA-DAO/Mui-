@@ -1,20 +1,19 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import api from '../services/api'; // Importa a api que acabamos de criar
+// CORREÇÃO 1: Adicionamos 'type' antes de ReactNode
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import api from '../services/api'; 
 
-// Tipagem dos dados do Usuário (ajuste conforme seu backend)
 interface User {
   id: string;
   name: string;
   email: string;
 }
 
-// O que o nosso Contexto vai disponibilizar para o app
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (token: string, userData: User) => void;
   logout: () => void;
-  loading: boolean; // Para não redirecionar antes de verificar o storage
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -24,7 +23,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Ao carregar a página, verifica se já tem login salvo
     const recoveredUser = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -48,7 +46,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     
-    api.defaults.headers.common['Authorization'] = undefined;
+    // Pequena melhoria de segurança: removemos o header completamente
+    delete api.defaults.headers.common['Authorization'];
     setUser(null);
   };
 
@@ -59,5 +58,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook personalizado para facilitar o uso (Ex: const { login } = useAuth();)
 export const useAuth = () => useContext(AuthContext);

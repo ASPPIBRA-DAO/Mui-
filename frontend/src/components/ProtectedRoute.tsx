@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 import { Box, CircularProgress } from "@mui/material";
+// 1. Importamos o tipo ReactNode explicitamente
+import { type ReactNode } from "react";
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
+  // 2. Mudamos de JSX.Element para ReactNode (aceita componentes, texto, fragmentos, etc.)
+  children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
@@ -24,6 +27,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Se estiver logado, mostra a página (Dashboard ou Todos)
+  // O ReactNode pode ser retornado diretamente aqui
   return children;
 };
 
