@@ -1,10 +1,11 @@
-import { Todos } from '../components/Todos';
+import React from 'react';
 
-export function TodosPage() {
+const Todos: React.FC = () => {
   return (
     <div>
-      <h1>Todos</h1>
-      <Todos />
+      <h1>Todos Page</h1>
     </div>
   );
-}
+};
+
+export default Todos;
