@@ -1,19 +1,20 @@
-import { Container, Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import { Box } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
-import type { ReactNode } from "react";
 
-interface Props {
-  children: ReactNode;
-}
-
-export default function LayoutPublic({ children }: Props) {
+export default function LayoutPublic() {
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* O Header já é sticky e glass */}
       <Header />
-      <Container sx={{ mt: 4, mb: 4 }}>
-        {children}
-      </Container>
+      
+      {/* O Outlet é onde Home, Login, etc. serão renderizados */}
+      <Box component="main" sx={{ flexGrow: 1, position: 'relative', zIndex: 1 }}>
+        <Outlet />
+      </Box>
+
+      {/* O Footer flutuante glass */}
       <Footer />
     </Box>
   );

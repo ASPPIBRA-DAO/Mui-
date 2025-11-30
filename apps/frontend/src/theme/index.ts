@@ -1,64 +1,40 @@
-// src/theme/index.ts
-import { PaletteMode } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
 
-// --- Cores da Marca (Baseada no Logo Royal DAO) ---
-const brandColors = {
-  blue: {
-    main: '#004E92',  // Azul Esfera (Royal Blue)
-    dark: '#002A5C',  // Azul Noturno
-    light: '#3378AF', // Azul Claro
-  },
-  gold: {
-    main: '#D4AF37',  // Dourado Metálico
-    dark: '#997B1A',  // Bronze
-    light: '#F4C430', // Amarelo Açafrão
-  },
-  darkBg: '#020b1c',   // Fundo Dark Mode (Azul quase preto)
-  lightBg: '#F5F7FA',  // Fundo Light Mode (Cinza gelo)
-};
+import { createTheme, alpha } from '@mui/material/styles';
 
-// --- Lógica de Design (Tokens) ---
-export const getDesignTokens = (mode: PaletteMode) => ({
+declare module '@mui/material/Paper' {
+  interface PaperPropsVariantOverrides {
+    glass: true;
+  }
+}
+
+const theme = createTheme({
   palette: {
-    mode,
-    ...(mode === 'light'
-      ? {
-          // === MODO CLARO ===
-          primary: { main: brandColors.blue.main, contrastText: '#ffffff' },
-          secondary: { main: brandColors.gold.main, contrastText: '#1A233A' },
-          background: { default: brandColors.lightBg, paper: '#FFFFFF' },
-          text: { primary: '#1A233A', secondary: '#58687E' },
-        }
-      : {
-          // === MODO ESCURO ===
-          primary: { main: brandColors.blue.light, contrastText: '#ffffff' },
-          secondary: { main: brandColors.gold.main, contrastText: '#000000' },
-          background: { default: brandColors.darkBg, paper: '#051126' },
-          text: { primary: '#E2E8F0', secondary: '#94A3B8' },
-        }),
+    mode: 'light', // Base clara conforme sua imagem do Header
+    primary: { main: '#0066FF' }, // Azul do botão "ENTRAR"
+    background: { default: '#f4f6f8' },
+    text: { primary: '#1A2027', secondary: '#7E8C99' }
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-    h1: { fontWeight: 700 },
-    button: { textTransform: 'none' as const, fontWeight: 600 },
+    fontFamily: '"Inter", "Roboto", sans-serif',
+    button: { textTransform: 'none', fontWeight: 600 }, // Botões modernos não são ALL CAPS
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: { borderRadius: '50px' }, // Botões arredondados
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: mode === 'light' ? '#FFFFFF' : brandColors.darkBg,
-          backgroundImage: 'none',
+    MuiPaper: {
+      variants: [
+        {
+          props: { variant: 'glass' },
+          style: {
+            // Física do Vidro (Blur + Borda + Sombra)
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+            border: '1px solid',
+            transition: 'all 0.3s ease-in-out',
+          },
         },
-      },
+      ],
     },
   },
 });
 
-// Helper para criar o tema
-export const createAppTheme = (mode: PaletteMode) => createTheme(getDesignTokens(mode));
+export default theme;

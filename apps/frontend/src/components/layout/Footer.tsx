@@ -1,164 +1,110 @@
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  IconButton,
-  TextField,
-  InputAdornment,
-} from "@mui/material";
+import { Box, Typography, Grid, IconButton, TextField, InputAdornment, Paper, Stack } from '@mui/material';
+import { alpha } from '@mui/material/styles';
+import { Twitter, LinkedIn, Instagram, GitHub, Telegram, WhatsApp, ContentCopy } from '@mui/icons-material';
 
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+const SocialIcon = ({ children }: { children: React.ReactNode }) => (
+  <IconButton size="small" sx={{ color: 'white', '&:hover': { color: 'primary.main' } }}>
+    {children}
+  </IconButton>
+);
 
-import { useState } from "react";
+const FooterLink = ({ children }: { children: React.ReactNode }) => (
+  <Typography variant="body2" sx={{ color: '#9ca3af', mb: 1.5, cursor: 'pointer', '&:hover': { color: 'white' } }}>
+    {children}
+  </Typography>
+);
+
+const FooterTitle = ({ children }: { children: React.ReactNode }) => (
+  <Typography variant="subtitle1" fontWeight="bold" color="white" sx={{ mb: 2 }}>
+    {children}
+  </Typography>
+);
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-  const tokenAddress = "0x1234...abcd";
-
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(tokenAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <Box
-      component="footer"
-      sx={{
-        bgcolor: "#181818",
-        color: "white",
-        pt: 8,
-        pb: 4,
-      }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={6}>
-          {/* Coluna 1 */}
+    <Box sx={{ mt: 'auto', p: 2 }}>
+      <Paper
+        variant="glass"
+        sx={{
+          p: { xs: 4, md: 6 },
+          borderRadius: '24px', // Borda bem arredondada conforme design moderno
+          backgroundColor: alpha('#111111', 0.85), // Preto Profundo Translúcido
+          borderColor: alpha('#ffffff', 0.1),
+          color: 'white', // Texto base branco
+        }}
+      >
+        <Grid container spacing={4}>
+          
+          {/* Coluna 1: Info e Social */}
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              ASPPIBRA-DAO
-            </Typography>
-
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
+            <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>ASPPIBRA-DAO</Typography>
+            <Typography variant="body2" sx={{ color: '#9ca3af', mb: 3, maxWidth: 300 }}>
               Redefinindo ativos reais no mundo digital através de Web3 e IA.
             </Typography>
-
-            <Box sx={{ display: "flex", gap: 1.5, mt: 2 }}>
-              <IconButton color="inherit" size="small"><TwitterIcon /></IconButton>
-              <IconButton color="inherit" size="small"><LinkedInIcon /></IconButton>
-              <IconButton color="inherit" size="small"><InstagramIcon /></IconButton>
-              <IconButton color="inherit" size="small"><GitHubIcon /></IconButton>
-              <IconButton color="inherit" size="small"><TelegramIcon /></IconButton>
-              <IconButton color="inherit" size="small"><WhatsAppIcon /></IconButton>
-            </Box>
+            <Stack direction="row" spacing={1}>
+              <SocialIcon><Twitter /></SocialIcon>
+              <SocialIcon><LinkedIn /></SocialIcon>
+              <SocialIcon><Instagram /></SocialIcon>
+              <SocialIcon><GitHub /></SocialIcon>
+              <SocialIcon><Telegram /></SocialIcon>
+              <SocialIcon><WhatsApp /></SocialIcon>
+            </Stack>
           </Grid>
 
-          {/* Coluna 2 */}
-          <Grid item xs={12} md={3}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              Ecossistema
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Governança
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Tokenomics
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Ativos (RWA)
-            </Typography>
+          {/* Coluna 2: Ecossistema */}
+          <Grid item xs={6} md={2}>
+            <FooterTitle>Ecossistema</FooterTitle>
+            <FooterLink>Governança</FooterLink>
+            <FooterLink>Tokenomics</FooterLink>
+            <FooterLink>Ativos (RWA)</FooterLink>
           </Grid>
 
-          {/* Coluna 3 */}
-          <Grid item xs={12} md={3}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              Recursos
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Whitepaper
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Documentação
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 1, color: "#bbbbbb" }}>
-              Auditorias
-            </Typography>
+          {/* Coluna 3: Recursos */}
+          <Grid item xs={6} md={2}>
+            <FooterTitle>Recursos</FooterTitle>
+            <FooterLink>Whitepaper</FooterLink>
+            <FooterLink>Documentação</FooterLink>
+            <FooterLink>Auditorias</FooterLink>
           </Grid>
 
-          {/* Coluna 4 */}
-          <Grid item xs={12} md={2}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              Token Contract
-            </Typography>
-
+          {/* Coluna 4: Token Contract (Campo visual da imagem) */}
+          <Grid item xs={12} md={4}>
+            <FooterTitle>Token Contract</FooterTitle>
             <TextField
-              value={tokenAddress}
-              variant="outlined"
-              size="small"
               fullWidth
-              sx={{
-                mt: 2,
-                input: { color: "#ccc" },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: "#444" },
-                  "&:hover fieldset": { borderColor: "#666" },
-                },
-              }}
+              variant="outlined"
+              defaultValue="0x1234...abcd"
               InputProps={{
                 readOnly: true,
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton size="small" onClick={handleCopy}>
-                      <ContentCopyIcon
-                        sx={{
-                          color: copied ? "#4caf50" : "#aaa",
-                          fontSize: 18,
-                        }}
-                      />
+                    <IconButton edge="end" sx={{ color: '#9ca3af' }}>
+                       <ContentCopy fontSize="small" />
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: '#9ca3af',
+                  fontFamily: 'monospace',
+                  backgroundColor: alpha('#000', 0.3), // Fundo mais escuro dentro do input
+                  borderRadius: '8px',
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: alpha('#fff', 0.1) },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: alpha('#fff', 0.3) },
+                }
+              }}
             />
-
-            {copied && (
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "#4caf50",
-                  mt: 1,
-                  display: "block",
-                }}
-              >
-                Copiado!
-              </Typography>
-            )}
           </Grid>
         </Grid>
 
-        {/* Linha inferior */}
-        <Box
-          sx={{
-            borderTop: "1px solid #333",
-            mt: 6,
-            pt: 3,
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="body2" sx={{ color: "#777" }}>
-            Copyright © {year} ASPPIBRA-DAO. Todos os direitos reservados.
+        {/* Rodapé do Rodapé */}
+        <Box sx={{ borderTop: `1px solid ${alpha('#fff', 0.1)}`, mt: 6, pt: 3, textAlign: 'center' }}>
+          <Typography variant="caption" sx={{ color: '#6b7280' }}>
+            Copyright © 2025 ASPPIBRA-DAO. Todos os direitos reservados.
           </Typography>
         </Box>
-      </Container>
+      </Paper>
     </Box>
   );
 }
