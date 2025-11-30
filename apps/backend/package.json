@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.2.0",
+    "@seu-app/shared": "workspace:*",
+    "@typegoose/typegoose": "^12.20.0",
+    "bcryptjs": "^2.4.3",
+    "hono": "^4.0.0",
+    "mongoose": "^8.20.1",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "wrangler": "^3.28.0"
+  }
+}

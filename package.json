@@ -1,0 +1,13 @@
+{
+  "name": "root-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build",
+    "deploy": "pnpm -r deploy"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "turbo": "^2.0.0"
+  }
+}

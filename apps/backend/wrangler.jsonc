@@ -1,0 +1,18 @@
+{
+  "name": "backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-09-23", 
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ACCOUNT_ID": "5d91807e648c183cb7833caa06dbcbdb"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "governance-system-db",
+      "database_id": "fbdff5ac-2fcc-4182-9cbf-be6c1d08e287"
+    }
+  ]
+}

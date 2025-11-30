@@ -133,39 +133,40 @@ Principais metas:
 
 ```mermaid
 flowchart LR
-  subgraph Frontend
-    A[React SPA (Vite)] -->|HTTPS| B[Cloudflare CDN]
-    B -->|HTTPS| C[Cloudflare Worker (Hono)]
+  subgraph "User and Frontend"
+    User -- "Accesses site" --> B[Cloudflare Pages]
+    B -- "Serves React SPA (Vite)" --> A[Browser]
+    A -- "Makes API calls (HTTPS)" --> C[Cloudflare Worker (Hono)]
   end
 
-  subgraph Edge
+  subgraph "Cloudflare Edge"
     C --> D{Auth Middleware}
-    D -->|request auth| E[JWT Guard]
-    D -->|no auth| F[Public Routes]
+    D -- "Authenticated" --> E[JWT Guard & Protected Routes]
+    D -- "Public" --> F[Public Routes]
   end
 
-  subgraph Persistence
-    C --> G[Cloudflare D1 (SQL)]
-    C --> H[Workers KV]
-    C --> I[Durable Objects]
-    C --> J[R2 (Objetos/Anexos)]
+  subgraph "Backend Services & Persistence"
+    C -- "Accesses data" --> G[Cloudflare D1 (SQL)]
+    C -- "Accesses state/cache" --> H[Workers KV]
+    C -- "Coordinates state" --> I[Durable Objects]
+    C -- "Stores files" --> J[R2 (Storage)]
   end
 
   subgraph Observability
-    C --> K[Logflare / Sentry]
-    C --> L[Metrics Exporter]
+    C -- "Sends logs/traces" --> K[Logging & Monitoring (Sentry, etc)]
   end
 
-  subgraph CI/CD
-    M[GitHub Actions / GitLab CI] -->|wrangler publish| C
-    M -->|deploy| B
+  subgraph "Deployment (CI/CD)"
+    M[GitHub Actions] -- "Deploys Frontend" --> B
+    M -- "Publishes Backend" --> C
   end
 
-  style Frontend fill:#f8f9fa,stroke:#333
-  style Edge fill:#fff,stroke:#333
-  style Persistence fill:#fff7e6,stroke:#333
-  style Observability fill:#eef7ff,stroke:#333
-  style CI/CD fill:#f0fff0,stroke:#333
+  style A fill:#f8f9fa,stroke:#333
+  style "User and Frontend" fill:#eef7ff,stroke:#333
+  style "Cloudflare Edge" fill:#fff,stroke:#333
+  style "Backend Services & Persistence" fill:#fff7e6,stroke:#333
+  style Observability fill:#f0fff0,stroke:#333
+  style "Deployment (CI/CD)" fill:#fdf,stroke:#333
 ```
 
 > Observação: cole esse bloco `mermaid` em sua documentação para renderizar o diagrama. Se quiser, eu também gero um PNG a partir deste diagrama.
