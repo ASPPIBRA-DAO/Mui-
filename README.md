@@ -139,3 +139,17 @@ Com a arquitetura básica validada, o foco agora é a reconstrução da lógica:
 2. **Reconstrução de Módulos:** Recriar os Models, Services e Controllers para Usuários e Tarefas, substituindo a lógica Mongoose pela lógica D1.
 3. **Reativação da Autenticação:** Implementar o login e register usando `bcryptjs` e `hono/jwt`.
 4. **Integração do Frontend:** Conectar os formulários do Frontend aos novos endpoints do Backend.
+
+## Infraestrutura — Cloudflare (D1 + R2)
+
+O sistema utiliza:
+
+### 🗄️ Banco de Dados D1
+- Nome: **governance-system-db**
+- ID: **fbdff5ac-2fcc-4182-9cbf-be6c1d08e287**
+
+### 📦 Armazenamento R2
+- Bucket: **governance-system-assets**
+- Account ID: **5d91807e648c183cb7833caa06dbcbdb**
+
+Toda a infraestrutura é configurada via `wrangler.toml` e automaticamente auditada pelo módulo de auditoria incluído no repositório.

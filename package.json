@@ -4,13 +4,17 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
-    "deploy": "pnpm -r deploy"
+    "deploy": "pnpm -r deploy",
+    "audit": "node tools/run-audit.cjs"
   },
   "devDependencies": {
-    "turbo": "^2.0.0",
-    "typescript": "^5.0.0",
-    "wrangler": "^4.51.0",
+    "@typegoose/typegoose": "^12.20.0",
+    "@types/node": "^24.10.1",
     "mongoose": "^8.20.1",
-    "@typegoose/typegoose": "^12.20.0"
+    "ts-morph": "^27.0.2",
+    "ts-node": "^10.9.2",
+    "turbo": "^2.0.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.51.0"
   }
 }

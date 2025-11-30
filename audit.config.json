@@ -1,0 +1,16 @@
+{
+  "d1": {
+    "name": "governance-system-db",
+    "id": "fbdff5ac-2fcc-4182-9cbf-be6c1d08e287"
+  },
+  "r2": {
+    "bucket": "governance-system-assets",
+    "account_id": "5d91807e648c183cb7833caa06dbcbdb"
+  },
+  "paths": {
+    "root": "./",
+    "apps": "./apps",
+    "packages": "./packages",
+    "migrations": "./infra/migrations"
+  }
+}
