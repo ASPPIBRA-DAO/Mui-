@@ -6,7 +6,8 @@
     "nodejs_compat"
   ],
   "vars": {
-    "ACCOUNT_ID": "5d91807e648c183cb7833caa06dbcbdb"
+    "ACCOUNT_ID": "5d91807e648c183cb7833caa06dbcbdb",
+    "MONGO_URI": "mongodb://127.0.0.1:27017/meu-app-dev"
   },
   "d1_databases": [
     {
