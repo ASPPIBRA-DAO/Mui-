@@ -1,11 +1,19 @@
 export default {
-  async fetch(request: Request, env: Env) {
-    const db = env.DB;
+  async fetch(req, env) {
+    const url = new URL(req.url);
 
-    const { results } = await db.prepare(
-      "SELECT name FROM governance_entities LIMIT 10"
-    ).all();
+    // Exemplo: Endpoint para listar usuários
+    if (url.pathname === "/users") {
+      try {
+        const { results } = await env.DB.prepare("SELECT * FROM users").all();
+        return new Response(JSON.stringify(results), {
+          headers: { "content-type": "application/json" },
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+      }
+    }
 
-    return Response.json(results);
-  }
-}
+    return new Response("API do Sistema de Governança está online!");
+  },
+};
