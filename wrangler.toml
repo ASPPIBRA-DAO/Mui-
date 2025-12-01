@@ -5,6 +5,13 @@ main = "apps/api/src/index.ts"
 
 account_id = "5d91807e648c183cb7833caa06dbcbdb"
 
+[observability]
+logs.enabled = false
+logs.head_sampling_rate = 1
+logs.invocation_logs = true
+logs.persist = true
+
+
 # -------------------------------------------------------
 # D1 Database configuration
 # -------------------------------------------------------
