@@ -1,12 +1,11 @@
-
 // 1. Importamos o Axios (o carteiro que leva e traz as cartas)
 import axios from 'axios';
 
 // 2. Criamos uma "instância". É como deixar o remetente padrão configurado.
 const api = axios.create({
   // Aqui dizemos: "O Backend mora nesse endereço". 
-  // Se mudar o backend de lugar, você só altera essa linha e o site todo atualiza.
-  baseURL: 'http://localhost:3000', 
+  // O backend agora roda na porta 8787 com o Wrangler.
+  baseURL: 'http://localhost:8787', 
 });
 
 // 3. Interceptor (O "Mordomo" automático)
