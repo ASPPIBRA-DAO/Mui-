@@ -1,8 +1,13 @@
-// src/context/ThemeContext.tsx
-import { createContext, useState, useMemo, useContext, ReactNode } from 'react';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import { CssBaseline, PaletteMode, useMediaQuery } from '@mui/material';
-import { createAppTheme } from '../theme'; // Importa o arquivo que criamos acima
+import { createContext, useState, useMemo, useContext } from 'react';
+// CORREÇÃO 1: 'import type' é obrigatório para tipos no TS moderno
+import type { ReactNode } from 'react'; 
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline, useMediaQuery } from '@mui/material';
+// CORREÇÃO 2: 'import type' para PaletteMode
+import type { PaletteMode } from '@mui/material';
+
+// CORREÇÃO 3: Importando o objeto 'default' do nosso arquivo theme.ts
+import defaultTheme from '../theme'; 
 
 interface ThemeContextData {
   toggleColorMode: () => void;
@@ -11,7 +16,8 @@ interface ThemeContextData {
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+// Renomeei para AppThemeProvider para evitar confusão com o do MUI
+export function AppThemeProvider({ children }: { children: ReactNode }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   
   const [mode, setMode] = useState<PaletteMode>(() => {
@@ -28,7 +34,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const theme = useMemo(() => createAppTheme(mode), [mode]);
+  const theme = useMemo(() => {
+    // CORREÇÃO 4: Recria o tema mesclando as configurações do 'glass' (defaultTheme)
+    // com o modo atual (light/dark).
+    return createTheme({
+      ...defaultTheme, // Mantém o efeito de vidro e configurações globais
+      palette: {
+        ...defaultTheme.palette,
+        mode, // Atualiza apenas o modo
+      },
+    });
+  }, [mode]);
 
   return (
     <ThemeContext.Provider value={{ toggleColorMode, mode }}>
