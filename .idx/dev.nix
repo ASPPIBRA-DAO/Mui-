@@ -17,20 +17,24 @@
     # Enable previews and customize settings
     previews = {
       enable = true;
-      previews = [
-        {
-          id = "frontend";
+      previews = {
+        # KEY CHANGE: Converted from list [ ] to set { key = {}; }
+        frontend = {
           command = ["pnpm" "-F" "frontend" "dev"];
-          port = 3000;
-          onPortFound = "open-external";
-        }
-        {
-          id = "api";
+          manager = "web";
+          env = {
+            # Ideally, pass the port via environment variable if your app supports it
+            PORT = "3000";
+          };
+        };
+        api = {
           command = ["pnpm" "-F" "api" "dev"];
-          port = 8787;
-          onPortFound = "open";
-        }
-      ];
+          manager = "web";
+          env = {
+            PORT = "8787";
+          };
+        };
+      };
     };
 
     # The following attributes are used to configure things in your workspace.
