@@ -5,6 +5,9 @@ main = "apps/api/src/index.ts"
 
 account_id = "5d91807e648c183cb7833caa06dbcbdb"
 
+[pages]
+pages_build_output_dir = "apps/frontend/dist"
+
 [observability]
 [observability.logs]
 enabled = false
