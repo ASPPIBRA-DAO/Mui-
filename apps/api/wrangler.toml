@@ -3,19 +3,32 @@ main = "src/index.ts"
 compatibility_date = "2025-01-01"
 account_id = "5d91807e648c183cb7833caa06dbcbdb"
 
-# -------------------------------------------------------
-# D1 Database configuration (Agora está no lugar certo!)
-# -------------------------------------------------------
+# Ativa o modo Node.js — ESSENCIAL para libs modernas
+compatibility_flags = ["nodejs_compat"]
+
+# Define que este Worker usa o formato moderno de módulos
+type = "javascript"
+
+# Comando de build padronizado (executado no deploy da Cloudflare)
+[build]
+command = "pnpm --filter apps/api build"
+
+# Variáveis de ambiente — mantenha ao menos o NODE_ENV
+[vars]
+NODE_ENV = "production"
+
+# ------------------------------------------------------
+# D1 Database
+# ------------------------------------------------------
 [[d1_databases]]
 binding = "DB"
 database_name = "governance-system-db"
 database_id = "fbdff5ac-2fcc-4182-9cbf-be6c1d08e287"
-migrations_dir = "../../infra/migrations" 
-# Nota: ajustei o caminho das migrações pois agora estamos dentro de apps/api
+migrations_dir = "../../infra/migrations"
 
-# -------------------------------------------------------
-# R2 Bucket configuration
-# -------------------------------------------------------
+# ------------------------------------------------------
+# R2 Bucket
+# ------------------------------------------------------
 [[r2_buckets]]
 binding = "ASSETS"
 bucket_name = "governance-system-assets"

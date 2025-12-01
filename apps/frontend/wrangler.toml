@@ -2,11 +2,22 @@ name = "governance-system-frontend"
 compatibility_date = "2025-01-01"
 account_id = "5d91807e648c183cb7833caa06dbcbdb"
 
-# Configuração de Pages (Site Estático)
+# Ativa Node.js para possíveis funções SSR/Pages Functions
+compatibility_flags = ["nodejs_compat"]
+
+# Build do frontend (Vite) dentro do monorepo
+[build]
+command = "pnpm --filter apps/frontend build"
+
+# Cloudflare Pages — saída da build
 [pages]
-# Como este arquivo está DENTRO da pasta frontend, o caminho é apenas "dist"
 pages_build_output_dir = "dist"
 
-# Observabilidade (Opcional, mas bom manter padrão)
+# Observabilidade — pode habilitar quando desejar logs avançados
 [observability]
 enabled = false
+
+# Variáveis de ambiente do Vite (exemplo, pode editar)
+[vars]
+VITE_API_URL = "https://governance-system.workers.dev"
+NODE_ENV = "production"
