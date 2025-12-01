@@ -1,0 +1,10 @@
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "governance-system-db",
+      "database_id": "fbdff5ac-2fcc-4182-9cbf-be6c1d08e287",
+      "migrations_dir": "./migrations"
+    }
+  ]
+}
