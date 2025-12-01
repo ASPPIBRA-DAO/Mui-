@@ -1,155 +1,272 @@
-# Arquitetura Profissional — Todo App (Monorepo Serverless)
+📘 DOCUMENTAÇÃO OFICIAL — ARQUITETURA DO MONOREPO (PNPM + CLOUDFLARE WORKERS + REACT)
 
-Conteúdo: Documentação oficial e revisada da arquitetura Fullstack Monorepo, alinhada com as boas práticas de Cloudflare Workers, Hono, e React.
+Versão 2.0 — Revisada, Profissional e Consolidada
+Projeto: Todo App — Monorepo Serverless
+Última atualização: 1 de Dezembro de 2025
 
-## 1. Visão Geral (Resumo da Arquitetura)
+## 1. 📖 Visão Geral da Arquitetura
 
-Aplicação: Todo App — SPA em React (Vite) consumindo uma API RESTful serverless executada em Cloudflare Workers com Hono.
+A aplicação Todo App é uma solução Fullstack executada em arquitetura Serverless Edge, composta por:
 
-A arquitetura foi migrada para um Monorepo centralizado, garantindo que a tipagem e os schemas Zod sejam compartilhados de forma eficiente entre o Frontend e o Backend.
+- Aplicação Web SPA desenvolvida em React + Vite
+- API Serverless desenvolvida em Hono + Cloudflare Workers
+- Monorepo PNPM com módulos compartilhados
+- D1 como banco SQL nativo do Cloudflare
+- R2 como armazenamento de ativos do sistema
+- Schemas Zod + Tipagem compartilhada entre API e Frontend
 
-### Principais Metas Alcançadas:
+Toda a stack foi organizada para garantir:
 
-* **Estabilidade:** Eliminação completa dos conflitos de runtime (Mongoose/Typegoose) e substituição por soluções estáveis.
-* **Monorepo Único:** Separação lógica das responsabilidades em `apps/` e `packages/`.
-* **Performance Edge:** Uso exclusivo de tecnologias otimizadas para a borda (Hono, Workers).
+**Objetivos Arquiteturais**
 
-### 1.1. Versões das Tecnologias Utilizadas (Estado Atual)
+- Estabilidade operacional — eliminação de dependências incompatíveis
+- Alta performance — execução 100% na borda (Cloudflare Edge)
+- Código DRY e modular — contratos reutilizáveis via pacotes internos
+- Escalabilidade horizontal — escalonamento automático global
+- Governança de código — auditoria interna automatizada
 
-**Frontend (`apps/frontend`)**
+## 2. 🗂 Estrutura do Monorepo (PNPM Workspaces)
 
-| Tecnologia | Versão | Uso |
-|---|---|---|
-| React | 19.2.0 | Componentes e UI |
-| Vite | 7.2.4 | Bundler e Servidor de Desenvolvimento |
-| React Router DOM | 7.9.6 | Roteamento |
-| Material UI | 7.3.5 | Componentes de Interface |
-| Axios | 1.13.2 | Cliente HTTP para API |
-
-**Backend (`apps/backend`)**
-
-| Tecnologia | Versão | Uso |
-|---|---|---|
-| Cloudflare Workers | (runtime mais recente) | Ambiente de Execução Serverless |
-| Hono | 4.10.7 (Exemplo) | Framework de Rotas/API |
-| Wrangler | 4.51.0 | CLI para Deploy e Dev Local |
-| @hono/jwt | (latest) | Geração/Validação de Tokens (Substitui jsonwebtoken) |
-| bcryptjs | 3.0.3 | Hashing de Senhas (Substitui argon2) |
-| Zod | 3.23.0 | Validação de Esquemas |
-
-**Shared (`packages/shared`)**
-
-* **Zod:** 3.23.0 (Schemas)
-* **TypeScript:** 5.9.3 (Tipagem)
-
-### 1.2. Estrutura de Diretórios (Monorepo)
-
-A estrutura atual reflete a organização em Workspaces, onde o código é isolado por responsabilidade, facilitando a manutenção e a escalabilidade.
+O repositório utiliza PNPM Workspaces, que organiza o código em aplicações (apps/) e bibliotecas internas (packages/).
 
 ```
 .
-├── apps/                               # Aplicações principais (Gerenciadas pelo pnpm)
-│   ├── backend/                        # API Serverless (Cloudflare Workers, Hono, D1)
-│   │   ├── src/                        # Código Fonte TypeScript (Onde a lógica reside)
-│   │   │   ├── config/                 # Configurações de Banco e Injeção de Dependência
-│   │   │   ├── middlewares/            # Funções de pré-processamento (ex: autenticação JWT)
-│   │   │   ├── modules/                # Módulos de Domínio (Lógica de Negócio principal)
-│   │   │   │   ├── auth/               # Autenticação (Lógica de Login, Registro)
-│   │   │   │   └── todos/              # Lógica de Tarefas (CRUD, D1 Services)
-│   │   │   └── index.ts                # Ponto de Entrada do Cloudflare Worker (Função fetch)
-│   │   ├── migrations/                 # Scripts SQL para o Cloudflare D1
-│   │   └── wrangler.jsonc              # Configuração do Cloudflare (Bindings, Node Compat)
-│   └── frontend/                       # Aplicação Cliente (React SPA)
-│       ├── src/                        # Código Fonte TypeScript/JSX
-│       │   ├── components/             # Componentes reutilizáveis (UI, Formulários)
-│       │   ├── context/                # Contextos de Estado Global (ex: AuthProvider, ThemeContext)
-│       │   ├── pages/                  # Componentes de Páginas (Views)
-│       │   ├── routes/                 # Definição e Proteção de Rotas
-│       │   └── services/               # Clientes de API (Axios e Stubs)
-│       └── package.json                # Dependências do Frontend
-├── packages/                           # Bibliotecas internas (Camada de Contrato)
-│   └── shared/                         # Tipagem e Schemas (A "Cola" do Monorepo)
-│       ├── src/                        # Código Fonte do Shared
-│       │   └── schemas/                # Definições de Schemas Zod (Validação)
-│       └── package.json                # Define o pacote como '@seu-app/shared'
-└── pnpm-workspace.yaml                 # Configuração que define o Monorepo para o pnpm
+├── apps/
+│   ├── api/                     # API serverless (Hono + Cloudflare Workers)
+│   │   ├── src/
+│   │   │   ├── config/          # Configurações (D1, R2, Environment)
+│   │   │   ├── middlewares/     # Middlewares Hono (ex: JWT Guard)
+│   │   │   ├── modules/         # Módulos de domínio
+│   │   │   │   ├── auth/
+│   │   │   │   └── todos/
+│   │   │   └── index.ts         # Entry point da API (fetch handler)
+│   │   └── wrangler.jsonc       # Configurações Cloudflare
+│   │
+│   └── frontend/                # SPA React (Vite)
+│       ├── src/
+│       │   ├── components/
+│       │   ├── context/
+│       │   ├── pages/
+│       │   ├── routes/
+│       │   └── services/        # Clientes HTTP (axios)
+│       └── package.json
+│
+└── packages/
+    ├── shared/                  # Tipos + Schemas Zod compartilhados
+    │   ├── src/
+    │   │   └── schemas/
+    │   └── package.json
+    │
+    └── utils/                   # Utilidades internas reutilizáveis
+        └── package.json
+
+pnpm-workspace.yaml             # Declara os workspaces do projeto
+pnpm-lock.yaml                  # ÚNICO lockfile permitido no monorepo
 ```
 
-## 2. Componentes da Arquitetura Monorepo
+## 3. 📦 Versões das Tecnologias (ambiente de desenvolvimento)
 
-O projeto é dividido em três workspaces gerenciados pelo pnpm:
+> As versões abaixo refletem o ambiente de desenvolvimento e as dependências principais usadas no monorepo. Atualize sempre que fizer upgrades e sincronize com `package.json` e `pnpm-lock.yaml`.
 
-### 2.1. Backend (`apps/backend`)
+| Componente / Ferramenta | Versão usada / recomendada |
+|---|---:|
+| pnpm (workspace) | ≥ 9.0 (recomendado) |
+| Node.js (dev) | 18.x / 20.x (LTS recomendado) |
+| React | 19.2.0 |
+| Vite | 7.2.4 |
+| React Router DOM | 7.9.6 |
+| Material UI | 7.3.5 |
+| Axios | 1.13.2 |
+| TypeScript | 5.9.3 |
+| Hono | 4.10.7 |
+| Cloudflare Wrangler | 4.51.0 |
+| @hono/jwt | latest (usar versão compatível com Hono v4) |
+| bcryptjs | 3.0.3 |
+| Zod | 3.23.0 |
+| Cloudflare D1 | (serviço Cloudflare — use runtime compatível com Wrangler 4.51) |
+| pnpm-lock.yaml | Único lockfile do monorepo |
 
-Responsável por toda a lógica de negócio, persistência (D1/KV), segurança e exposição da API REST.
+### Sugestões práticas
 
-| Caminho | Descrição |
-|---|---|
-| `src/index.ts` | Entry Point do Worker. Contém `export default { fetch }` e monta o App Hono. |
-| `src/modules/*` | Domínios/Módulos. Contém a lógica (Controllers, Services, Models). |
-| `src/modules/*/controller.ts` | Trata a requisição Hono (`c.req`), chama o Service e retorna a resposta. |
-| `src/modules/*/service.ts` | Lógica de Negócio e manipulação de dados (interage com D1). |
-| `src/middlewares/guard.ts` | Middleware de autenticação (verifica JWT). |
-| `wrangler.jsonc` | Configuração de Bindings (D1, KV, Secrets) e compatibilidade (`nodejs_compat`). |
+- Adicione campos `engines` no `package.json` da raiz para travar a versão mínima do Node/pnpm:
+  ```json
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  }
+  ```
+- **Mantenha uma única fonte de verdade para versões:** Use `package.json` por workspace e `pnpm-lock.yaml` na raiz.
+- **Automatize updates** com Renovate/Dependabot e crie PRs de atualização.
+- Ao atualizar uma dependência incompatível (ex.: Hono maior), atualize também esta tabela e as instruções de deploy (`wrangler.jsonc`/`wrangler.toml`).
 
-### 2.2. Frontend (`apps/frontend`)
+## 4. ⚙️ Funcionamento do PNPM (Arquitetura Interna)
 
-A Interface do Usuário (UI) que consome o Backend.
+O PNPM utiliza uma arquitetura moderna baseada em:
 
-| Caminho | Descrição |
-|---|---|
-| `src/App.tsx` | Componente principal com a definição das rotas (RouterProvider). |
-| `src/pages/*` | Componentes que representam telas inteiras (Home, Login, Dashboard). |
-| `src/components/*` | Componentes reutilizáveis (UI, Formulários). |
-| `src/context/AuthProvider.tsx` | Gerenciamento de estado de autenticação (Lógica de bypass atual). |
-| `src/services/api.ts` | Instância de Axios configurada para a API (URL base e Interceptores). |
+✔ **Repositório Central ("PNPM Store")**
 
-### 2.3. Shared (`packages/shared`)
+Onde todas as dependências reais ficam armazenadas:
+`~/.pnpm-store`
 
-A Camada de Tipagem e Contratos.
+✔ **Node Modules Virtuais (Symlinks)**
 
-| Caminho | Descrição |
-|---|---|
-| `src/schemas/*` | Contratos (Zod). Define a estrutura de dados para entradas de API (validação) e saídas (tipagem). |
-| `src/index.ts` | Ponto de Exportação Único. Facilita o consumo (ex: `import { LoginInput } from '@seu-app/shared'`). |
+Cada workspace possui sua própria pasta node_modules, porém contendo apenas links simbólicos para os pacotes na store.
 
-## 3. Persistência e Segurança (Workers)
+✔ **Benefícios**
 
-* **Persistência:** O banco de dados primário deve ser Cloudflare D1 (SQL), que é nativo, performático e resolve os erros de compatibilidade que tínhamos com o Mongoose.
-* **Hashing de Senhas:** Usar `bcryptjs` (que funciona via `nodejs_compat`) ou as APIs WebCrypto nativas do Workers.
-* **JWT:** Usar o utilitário nativo `hono/jwt` para `sign` e `verify` tokens, garantindo a compatibilidade Edge.
+- Redução extrema de espaço
+- Instalações até 30x mais rápidas
+- Zero duplicação de dependências
+- Cache persistente global
 
-## 4. Estrutura de Rotas e Fluxo de Dados
+❗ **Política Oficial do Projeto**
 
-O Edge/API (Cloudflare Workers) segue o padrão MVC (Model-View-Controller) adaptado para uma arquitetura funcional:
+O monorepo NÃO permite o uso de:
 
-1. **Requisição:** Chega ao Worker.
-2. **`index.ts`:** Executa a função `fetch` e passa a requisição para o Hono.
-3. **Hono Middlewares:** CORS, Logger, e `authenticate` (`guard.ts`).
-4. **`todo.routes.ts`:** Usa o `zValidator` com Schemas do Shared para validar o payload.
-5. **`todo.controller.ts`:** Recebe os dados validados, chama o `todo.service.ts`.
-6. **`todo.service.ts`:** Interage com o Cloudflare D1 (via Bindings `env.DB`).
-7. **Resposta:** Os dados são retornados, e o Hono os empacota em JSON.
+- `package-lock.json` (bloqueado)
+- `yarn.lock`         (bloqueado)
 
-## 5. Próximos Passos Prioritários
+## 5. 🏗 Arquitetura da API — Hono + Cloudflare Workers
 
-Com a arquitetura básica validada, o foco agora é a reconstrução da lógica:
+A API segue o padrão funcional adaptado para a borda:
 
-1. **Implementação de Banco D1:** Escrever o código D1 Client (`src/utils/db.ts`) e definir as consultas SQL para Usuários e Tarefas.
-2. **Reconstrução de Módulos:** Recriar os Models, Services e Controllers para Usuários e Tarefas, substituindo a lógica Mongoose pela lógica D1.
-3. **Reativação da Autenticação:** Implementar o login e register usando `bcryptjs` e `hono/jwt`.
-4. **Integração do Frontend:** Conectar os formulários do Frontend aos novos endpoints do Backend.
+`Cliente → Worker (fetch) → Hono → Middleware → Rota → Controller → Service → D1`
 
-## Infraestrutura — Cloudflare (D1 + R2)
+### 5.1. Componentes Principais
+| Camada | Descrição |
+| :--- | :--- |
+| **index.ts** | Ponto de entrada do Worker. Monta o app Hono. |
+| **routes/** | Define rotas e associa a validações Zod via zValidator. |
+| **middlewares/** | Autenticação JWT, CORS, Logs. |
+| **modules/** | Domínio (auth, todos), com controllers e services. |
+| **services/** | Acessam o banco D1 via env.DB. |
+| **D1 SQL** | Persistência nativa, sem ORMs. |
 
-O sistema utiliza:
+### 5.2. Segurança
 
-### 🗄️ Banco de Dados D1
-- Nome: **governance-system-db**
-- ID: **fbdff5ac-2fcc-4182-9cbf-be6c1d08e287**
+- Hashing de senha → `bcryptjs`
+- JWT → `@hono/jwt` (sign & verify)
+- Secrets → configuradas via `wrangler secret put`
 
-### 📦 Armazenamento R2
-- Bucket: **governance-system-assets**
-- Account ID: **5d91807e648c183cb7833caa06dbcbdb**
+**Tokens:**
 
-Toda a infraestrutura é configurada via `wrangler.toml` e automaticamente auditada pelo módulo de auditoria incluído no repositório.
+- Access Token: 15 minutos
+- Refresh Token: 7 dias
+
+## 6. 🧱 Persistência — Cloudflare D1
+**Banco:**
+`governance-system-db`
+**ID:** `fbdff5ac-2fcc-4182-9cbf-be6c1d08e287`
+
+**Migrations:**
+Localizadas em:
+`apps/api/migrations/`
+
+Aplicação:
+`pnpm wrangler d1 migrations apply governance-system-db`
+
+## 7. 🖼 Frontend — React + Vite
+
+A aplicação cliente é uma SPA que utiliza:
+
+- React 19
+- Material UI
+- React Router DOM
+- Axios para consumo da API
+- Context API para autenticação
+
+**Fluxo de autenticação:**
+`Login → Recebe JWT → Grava em localStorage → Interceptor Axios aplica Authorization → Rotas protegidas`
+
+## 8. 🔗 Shared — Tipos e Schemas
+
+O pacote `packages/shared` contém:
+
+- Tipos globais
+- Schemas Zod
+- Contratos entre API e Frontend
+
+Exemplo de export:
+`import { LoginSchema, TodoSchema } from '@app/shared';`
+
+## 9. 🔍 Auditoria Interna do Repositório (Script integrado)
+
+O monorepo inclui um módulo interno de Auditoria que executa verificações automáticas.
+
+**Comando:**
+`pnpm audit:repo`
+
+**Verificações executadas:**
+| Teste | Severidade | Status |
+| :--- | :--- | :--- |
+| TODOs no código | Low | ✔ |
+| Uso de any | Medium | ✔ |
+| Magic Numbers | Medium | ✔ |
+| Catch vazio | High | ✔ |
+| then() sem catch() | High | ✔ |
+| Funções muito grandes | Medium | ✔ |
+| Ciclos de importação | Critical | ✔ |
+| Imports suspeitos | Low | ✔ |
+| Imports não utilizados | Low | ✔ |
+| Arquivos duplicados | Medium | ✔ |
+| Pastas duplicadas | Low | ✔ |
+| Estrutura do monorepo | High | ✔ |
+
+O relatório é gerado automaticamente em:
+`/audit/report.md`
+
+## 10. 🧭 Governança Técnica (Oficial)
+### 10.1. Normas Obrigatórias
+
+- Usar somente PNPM
+- Apenas 1 lockfile → `pnpm-lock.yaml`
+- Importar apenas via paths absolutos configurados
+- Proibido deixar código sem validação Zod
+- Proibido lógica de negócio dentro de controllers
+- Proibido criar "Models" (não existe ORM)
+
+### 10.2. Código Deve Ser
+
+- Determinístico
+- Funcional
+- Puro quando possível
+- Segregado por domínio
+- Compartilhado apenas via “packages/”
+
+## 11. 🧱 Diagramas Arquiteturais
+### 11.1. Fluxo Completo (Frontend → API → D1)
+```
+[React App]
+    ↓ HTTP
+[Cloudflare Edge]
+    ↓
+[Worker fetch()]
+    ↓
+[Hono Middleware]
+    ↓
+[Route Handler]
+    ↓
+[Controller]
+    ↓
+[Service]
+    ↓
+[D1 Database]
+```
+
+### 11.2. Monorepo (Dependências Internas)
+```
+apps/api  ───────┐
+                 │
+apps/frontend ───┤────> packages/shared
+                 │
+packages/utils ──┘
+```
+
+## 12. 🚀 Roadmap Técnico (Recomendado)
+Próximos passos:
+
+- Padronizar revisões via auditoria automática
+- Criar scripts de CI (GitHub Actions)
+- Gerar documentação interativa (OpenAPI + Zod)
+- Criar CLI interna para migrações e seeds D1
+- Implantar testes E2E usando Playwright
