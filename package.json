@@ -5,7 +5,8 @@
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
     "deploy": "pnpm -r deploy",
-    "audit": "node tools/run-audit.cjs"
+    "audit": "node tools/run-audit.cjs",
+    "seo": "node scripts/seo-master.js"
   },
   "devDependencies": {
     "@typegoose/typegoose": "^12.20.0",

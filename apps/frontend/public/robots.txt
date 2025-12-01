@@ -1,0 +1,16 @@
+# Gerasdo automaticamente pelo SEO-Master
+User-agent: *
+Allow: /
+
+# Segurança e Admin
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /account
+Disallow: /api/
+
+# Arquivos Técnicos
+Disallow: /.env
+Disallow: /wrangler.toml
+Disallow: /package.json
+
+Sitemap: https://www.asppibra-dao.com.br/sitemap.xml
