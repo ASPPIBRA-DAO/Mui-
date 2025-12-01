@@ -1,5 +1,5 @@
 export default {
-  async fetch(req, env) {
+  async fetch(req: Request, env: any) {
     const url = new URL(req.url);
 
     // Exemplo: Endpoint para listar usuários
@@ -10,7 +10,7 @@ export default {
           headers: { "content-type": "application/json" },
         });
       } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+        return new Response(JSON.stringify({ error: (e as Error).message }), { status: 500 });
       }
     }
 
