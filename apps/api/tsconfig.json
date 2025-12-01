@@ -8,8 +8,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*",
+    "worker-configuration.d.ts",
+    "wrangler.jsonc"
+  ],
+  "exclude": ["node_modules", "dist", "test"]
 }

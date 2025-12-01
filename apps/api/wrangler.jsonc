@@ -1,4 +1,23 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "governance-system",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-01-01",
+  "account_id": "5d91807e648c183cb7833caa06dbcbdb",
+  
+  // Ativa suporte a APIs do Node.js (Crypto, Buffer, etc)
+  // Essencial para o Hono e bibliotecas de autenticação
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+
+  // Variáveis de ambiente
+  "vars": {
+    "NODE_ENV": "production"
+  },
+
+  // 📦 BANCO DE DADOS (D1)
+  // Caminho corrigido para ./migrations (estrutura nova)
   "d1_databases": [
     {
       "binding": "DB",
@@ -6,5 +25,21 @@
       "database_id": "fbdff5ac-2fcc-4182-9cbf-be6c1d08e287",
       "migrations_dir": "./migrations"
     }
-  ]
+  ],
+
+  // 🗂️ ARMAZENAMENTO (R2)
+  // Mantive o nome "ASSETS" pois seu código antigo (TOML) usava isso.
+  // Se mudar para "BUCKET", terá que alterar seu código fonte (env.ASSETS -> env.BUCKET).
+  "r2_buckets": [
+    {
+      "binding": "ASSETS",
+      "bucket_name": "governance-system-assets",
+      "preview_bucket_name": "governance-system-assets"
+    }
+  ],
+
+  // ⚙️ Observabilidade (Logs no dashboard)
+  "observability": {
+    "enabled": true
+  }
 }
