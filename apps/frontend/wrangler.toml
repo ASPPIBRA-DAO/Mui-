@@ -1,0 +1,12 @@
+name = "governance-system-frontend"
+compatibility_date = "2025-01-01"
+account_id = "5d91807e648c183cb7833caa06dbcbdb"
+
+# Configuração de Pages (Site Estático)
+[pages]
+# Como este arquivo está DENTRO da pasta frontend, o caminho é apenas "dist"
+pages_build_output_dir = "dist"
+
+# Observabilidade (Opcional, mas bom manter padrão)
+[observability]
+enabled = false
