@@ -1,16 +1,15 @@
-# Gerasdo automaticamente pelo SEO-Master
+# Gerado automaticamente pelo ASPPIBRA-DAO SEO Builder (v2)
 User-agent: *
 Allow: /
 
-# Segurança e Admin
 Disallow: /dashboard
 Disallow: /admin
 Disallow: /account
 Disallow: /api/
 
-# Arquivos Técnicos
+# Técnicos
 Disallow: /.env
 Disallow: /wrangler.toml
 Disallow: /package.json
 
-Sitemap: https://www.asppibra-dao.com.br/sitemap.xml
+Sitemap: https://asppibra.com/sitemap.xml
