@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
-import Header from "./Header";
-import Footer from "./Footer";
-import ConstructionPopup from "../common/ConstructionPopup";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import ConstructionPopup from "../components/common/ConstructionPopup";
 
 export default function LayoutPublic() {
   return (

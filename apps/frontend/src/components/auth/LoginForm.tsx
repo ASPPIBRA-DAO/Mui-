@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthProvider';
-import api from '../../services/api';
+import authService from '../../services/auth';
 
 // Componentes visuais do Material UI
-import { Box, Button, TextField, Alert } from '@mui/material'; // Removi Typography e Paper que não estavam sendo usados para limpar os avisos
+import { Box, Button, TextField, Alert } from '@mui/material';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -19,19 +19,16 @@ const LoginForm = () => {
     setError('');
 
     try {
-      // 1. Envia os dados para o Backend
-      const response = await api.post('/login', { email, password });
+      // 1. Chama o serviço de autenticação com as credenciais
+      const { token, user } = await authService.login({ email, password });
 
-      // 2. Pega o token e o user da resposta
-      const { token, user } = response.data;
-
-      // 3. Salva no contexto global
+      // 2. Salva o token e o usuário no contexto global
       login(token, user);
 
-      // 4. Redireciona para o Dashboard
+      // 3. Redireciona para o Dashboard
       navigate('/dashboard');
       
-    } catch (err) { // <--- O ERRO ESTAVA PROVAVELMENTE AQUI (Faltava a chave de abertura '{')
+    } catch (err) {
       console.error(err);
       setError('Falha no login. Verifique seu email e senha.');
     }
@@ -39,7 +36,6 @@ const LoginForm = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {/* Mostra o erro se houver */}
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       
       <TextField
