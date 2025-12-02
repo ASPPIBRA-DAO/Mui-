@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import theme from "./theme"; // Importa o tema que criamos com o efeito 'glass'
 
 // Componentes de Layout
-import LayoutPublic from "./components/layout/LayoutPublic";
+import LayoutPublic from "./layouts/LayoutPublic"; // Caminho corrigido
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 // Páginas
