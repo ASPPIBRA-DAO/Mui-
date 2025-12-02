@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './i18n'; // <--- ADICIONE ESTA LINHA EXATAMENTE AQUI
 
 // Importações do Material UI v7
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
@@ -23,7 +24,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '\"Roboto\", \"Helvetica\", \"Arial\", sans-serif',
   },
 });
 

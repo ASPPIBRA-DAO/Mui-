@@ -17,5 +17,8 @@
     "turbo": "^2.0.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.51.0"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }
