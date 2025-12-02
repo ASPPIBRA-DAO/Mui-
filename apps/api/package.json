@@ -7,12 +7,16 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^1.1.5",
     "@hono/zod-validator": "^0.2.0",
     "@seu-app/shared": "workspace:*",
     "bcryptjs": "^2.4.3",
-    "hono": "^4.0.0",
+    "drizzle-kit": "^0.31.7",
+    "drizzle-orm": "^0.44.7",
+    "hono": "^4.10.7",
+    "hono-rate-limiter": "^0.4.2",
     "reflect-metadata": "^0.2.2",
-    "zod": "^3.22.0"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240208.0",
