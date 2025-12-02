@@ -1,12 +1,12 @@
-import { BreakpointsOptions } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
 
-const breakpoints: BreakpointsOptions = {
+const breakpoints: ThemeOptions['breakpoints'] = {
   values: {
-    xs: 0,      // Mobile (0px - 767px)
-    sm: 768,    // Tablet
-    md: 1024,   // Laptop
-    lg: 1440,   // Laptop L (HD)
-    xl: 2560,   // 4K
+    xs: 0,
+    sm: 768,
+    md: 1024,
+    lg: 1440,
+    xl: 2560,
   },
 };
 

@@ -1,7 +1,8 @@
-// src/theme/components.ts
-import { Components, Theme, alpha } from '@mui/material/styles';
+// alpha é importado normalmente, Components e Theme recebem 'type'
+import { alpha, type Components, type Theme } from '@mui/material/styles';
 
-// Nota: A tipagem agora vive em './types.ts', não precisamos declarar aqui.
+// Importante: A declaração de tipos foi movida para types.ts, 
+// então removemos o declare module daqui.
 
 const components: Components<Theme> = {
   MuiContainer: {
