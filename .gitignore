@@ -29,6 +29,9 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+# Generated backups and reports
+seo-backups/
+
 # Operating System Files
 .DS_Store
 Thumbs.db
